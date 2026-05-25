@@ -1,0 +1,847 @@
+/* ==========================================================================
+   1. НАЛАШТУВАННЯ ТА ГЛОБАЛЬНІ ЗМІННІ
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --black: #0a0a0a;
+    --dark-grey: #1a1a1a;
+    --gold: #b8860b;
+    --white: #f5f5f5;
+}
+
+body {
+    background-color: #050505; /* Трохи темніший фон для преміум вигляду */
+    color: var(--white);
+    /* Безпечні системні шрифти, щоб усе чітко працювало */
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+body.booking-page {
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #050505;
+    color: #fff;
+}
+
+
+/* ==========================================================================
+   2. ШАПКА САЙТУ, МЕНЮ ТА ЛОГОТИП (Для всіх сторінок)
+   ========================================================================== */
+.main-header {
+    background-color: var(--black);
+    border-bottom: 1px solid rgba(184, 134, 11, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 5%; /* Вирівняли, щоб лого не тікало */
+}
+
+.logo-link {
+    text-decoration: none;
+    display: inline-block;
+}
+
+.logo-link:hover .logo-text span {
+    color: var(--gold); /* Ефект при наведенні на лого */
+}
+
+.logo-text {
+    font-family: Georgia, serif;
+    color: var(--gold);
+    letter-spacing: 2px;
+}
+
+.logo-text span {
+    color: var(--white);
+}
+
+.contacts span {
+    margin-right: 20px;
+    font-size: 0.9rem;
+}
+
+.socials a {
+    color: var(--gold);
+    text-decoration: none;
+    margin-left: 15px;
+    font-size: 0.8rem;
+    transition: 0.3s;
+}
+
+.socials a:hover { color: var(--white); }
+
+/* Навігація сайту */
+.main-nav {
+    padding: 15px 0;
+}
+
+.main-nav ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+}
+
+.main-nav li { 
+    margin: 0 15px; /* Оптимальний відступ, щоб кнопки не розповзалися */
+}
+
+.main-nav a {
+    color: var(--white);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.main-nav a:hover, .main-nav a.active {
+    color: var(--gold);
+}
+
+
+/* ==========================================================================
+   3. КНОПКИ ТА ЗАГАЛЬНІ ЕЛЕМЕНТИ
+   ========================================================================== */
+.btn-gold {
+    border: 1px solid var(--gold);
+    padding: 8px 20px;
+    background: var(--gold);
+    color: var(--black) !important;
+    border-radius: 2px;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-gold:hover {
+    transform: scale(1.1);
+}
+
+.btn-main { 
+    padding: 15px 40px;
+    background-color: var(--gold); 
+    color: var(--black); 
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 3px;
+    transition: 0.4s;
+    display: inline-block;
+}
+
+.btn-main:hover { 
+    background-color: var(--white); 
+    transform: scale(1.05);
+}
+
+.btn-outline { 
+    border: 1px solid var(--white); 
+    color: var(--white); 
+    text-decoration: none;
+    padding: 15px 35px;
+    font-weight: bold;
+    margin: 0 10px;
+    display: inline-block;
+    transition: 0.3s;
+}
+
+.btn-outline:hover { background: var(--white); color: var(--black); }
+
+/* Заголовки секцій */
+.section-title { 
+    font-family: 'Playfair Display', serif; 
+    color: #c5a059; 
+    font-size: 36px; 
+    margin-bottom: 50px; 
+    text-transform: uppercase; 
+    text-align: center;
+}
+
+
+/* ==========================================================================
+   4. СТОРІНКА "ГОЛОВНА" (index.html)
+   ========================================================================== */
+/* Старий банер (про всяк випадок, якщо десь лишився) */
+
+
+.hero-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.hero-content {
+    position: relative;
+    text-align: center;
+    z-index: 1;
+}
+
+.hero-content h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    margin-bottom: 10px;
+    color: var(--white);
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: #ccc;
+}
+
+.hero-buttons a {
+    margin: 0 10px;
+}
+
+/* Наш кастомний слайдер */
+.hero-slider-custom {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    overflow: hidden;
+    background: #000;
+}
+
+.slider-track-custom {
+    width: 100%;
+    height: 100%;
+}
+
+.slide-custom {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slide-custom.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+/* Кнопки перемикання слайдера */
+.slide-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.4);
+    color: #c5a059;
+    border: 1px solid #c5a059;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 18px;
+    z-index: 10;
+    transition: 0.3s;
+}
+.slide-nav:hover { background: #c5a059; color: #000; }
+.slide-nav.prev { left: 20px; }
+.slide-nav.next { right: 20px; }
+
+/* Блок переваг (стара версія) */
+.features {
+    padding: 100px 5%;
+    background: var(--dark-grey);
+}
+.features .container { display: flex; justify-content: space-around; flex-wrap: wrap; }
+.feature-item { text-align: center; flex: 1; min-width: 250px; padding: 20px; }
+.feature-item .icon { font-size: 3rem; margin-bottom: 15px; display: block; }
+.feature-item h3 { color: var(--gold); margin-bottom: 10px; }
+
+/* Переваги (нова сітка) */
+.features-section { padding: 80px 5%; background: #0c0c0c; text-align: center; }
+.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px; }
+.feature-card { padding: 40px; border: 1px solid #222; transition: 0.4s; }
+.feature-card:hover { border-color: #c5a059; transform: translateY(-10px); }
+.f-icon { font-size: 40px; margin-bottom: 20px; }
+
+/* Наша Галерея "Наші роботи" */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+    gap: 15px; 
+    padding: 30px; 
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 400px; 
+    object-fit: cover; 
+    transition: transform 0.4s ease-in-out; 
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05); 
+}
+
+/* Блок з картою */
+.map-section {
+    padding: 80px 0;
+    background: var(--black);
+    text-align: center;
+}
+
+.map-container {
+    filter: grayscale(1) invert(0.9) contrast(1.2); /* Красивий чорно-білий стиль */
+    transition: 0.5s;
+    border-top: 2px solid var(--gold);
+    border-bottom: 2px solid var(--gold);
+}
+
+.map-container:hover {
+    filter: grayscale(0) invert(0) contrast(1); /* Кольорова при наведенні */
+}
+
+.map-info { margin-top: 20px; font-size: 1.1rem; }
+.map-info p { color: var(--gold); }
+
+
+/* ==========================================================================
+   5. СТОРІНКА "ПРО НАС" (about.html)
+   ========================================================================== */
+.about-page {
+    background-color: #000;
+    color: #fff;
+    padding-bottom: 50px;
+}
+
+.container-narrow {
+    max-width: 800px; 
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.about-hero {
+    text-align: center;
+    padding: 60px 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.5)), url('img/about-bg.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.about-text-content {
+    max-width: 900px;
+    margin: 0 auto;
+    line-height: 1.8;
+    font-size: 18px;
+    color: #ccc;
+    text-align: justify;
+}
+
+.about-text-content p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #ccc;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+.about-text-content .lead-text {
+    font-size: 19px;
+    color: #fff;
+    font-weight: 300;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.mustache-divider { margin: 30px 0; }
+.mustache-divider img { width: 60px; filter: invert(1); }
+
+/* Двоколонковий блок про нас */
+.details-container {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    padding: 80px 10%;
+    background: #0a0a0a;
+}
+
+.details-text { flex: 1; }
+.details-text h2 { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--gold); margin-bottom: 20px; }
+.details-image { flex: 1; }
+.details-image img { width: 100%; border-radius: 5px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+
+/* Преміум версія секції 50/50 */
+.details-container-premium {
+    display: flex;
+    align-items: center;
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+    gap: 50px;
+}
+
+.details-text-block { flex: 1; }
+.details-text-block h2 { font-family: Georgia, serif; font-size: 28px; color: #fff; margin: 10px 0 20px 0; letter-spacing: 1px; }
+.details-text-block p { color: #aaa; line-height: 1.7; margin-bottom: 15px; }
+.sub-gold { color: #c5a059; font-size: 12px; letter-spacing: 3px; font-weight: bold; }
+
+.details-image-block { flex: 1; }
+.details-image-block img { width: 100%; height: auto; border-radius: 4px; display: block; }
+.img-border-decor { position: relative; padding: 10px; border: 1px solid #c5a059; }
+
+/* Секція старих цінностей */
+.values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; padding: 60px 10%; border-top: 1px solid #222; }
+.value-item h3 { color: var(--gold); margin-bottom: 15px; }
+
+/* Преміум картки цінностей */
+.values-section { padding: 80px 0; background: #090909; }
+.values-grid-premium { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.value-card-v4 { background: #111; border: 1px solid #1a1a1a; padding: 40px 30px; border-radius: 4px; transition: 0.3s; }
+.value-card-v4:hover { border-color: #c5a059; background: #151515; }
+.value-card-v4 .v-num { font-family: Georgia, serif; font-size: 32px; color: #c5a059; margin-bottom: 15px; font-weight: bold; }
+.value-card-v4 h3 { font-size: 18px; color: #fff; margin-bottom: 15px; letter-spacing: 1px; }
+.value-card-v4 p { color: #888; font-size: 14px; line-height: 1.6; }
+
+/* Секція статистики */
+.stats-section { display: flex; justify-content: space-around; padding: 60px 5%; background: var(--gold); }
+.stat-item { text-align: center; color: var(--black); }
+.stat-item .num { display: block; font-size: 2.5rem; font-weight: bold; font-family: 'Playfair Display', serif; }
+.stat-item .text { text-transform: uppercase; font-size: 0.8rem; font-weight: bold; }
+
+
+/* ==========================================================================
+   6. СТИЛІ БЛОКУ КОМАНДИ / МАЙСТРІВ (team-section)
+   ========================================================================== */
+.team-section { padding: 80px 5%; text-align: center; background: var(--dark-grey); }
+.team-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; margin-top: 40px; }
+.team-member { width: 280px; }
+
+.member-photo {
+    filter: none !important; /* Яскраві фото без застарілого ч/б фільтру */
+    width: 100%;
+    height: 350px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 5px;
+}
+
+/* Старі стилі карток команди про всяк випадок */
+.team-card { background: var(--black); padding: 20px; text-align: center; border: 1px solid #222; transition: 0.4s; }
+.team-card:hover { border-color: var(--gold); transform: translateY(-5px); }
+.member-img { height: 500px; background-size: cover; background-position: center; margin-bottom: 20px; }
+.team-card h3 { color: var(--gold); margin-bottom: 5px; }
+.team-card span { display: block; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 15px; color: #777; }
+
+
+/* ==========================================================================
+   7. СТОРІНКА "ПОСЛУГИ" (services.html)
+   ========================================================================== */
+.page-title {
+    text-align: center;
+    padding: 60px 0;
+    background: #111;
+}
+
+.page-title h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: var(--gold);
+}
+
+.services-grid { padding: 50px 5%; }
+.services-grid .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+
+.service-card {
+    background: var(--dark-grey);
+    border: 1px solid #333;
+    overflow: hidden;
+    transition: 0.4s;
+    position: relative;
+}
+
+.service-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-10px);
+}
+
+.service-img { height: 250px; background-size: cover; background-position: center; }
+.service-info { padding: 25px; text-align: center; }
+.service-info h3 { color: var(--white); margin-bottom: 10px; text-transform: uppercase; }
+.service-info p { font-size: 0.9rem; color: #aaa; margin-bottom: 20px; height: 40px; }
+.price { display: block; font-size: 1.5rem; color: var(--gold); font-weight: bold; margin-bottom: 20px; }
+
+.btn-book {
+    display: inline-block;
+    padding: 10px 25px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    transition: 0.3s;
+}
+.btn-book:hover { background: var(--gold); color: var(--black); }
+
+
+/* ==========================================================================
+   8. СТОРІНКА "ВАКАНСІЇ" ТА "ШКОЛА" (jobs.html / school.html)
+   ========================================================================== */
+.jobs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    padding: 80px 5%;
+}
+
+.job-card {
+    background: #111;
+    padding: 30px;
+    border-left: 4px solid var(--gold);
+}
+
+.job-list {
+    margin: 20px 0;
+    list-style: square;
+    padding-left: 20px;
+    color: #ccc;
+}
+
+.job-offer {
+    font-weight: bold;
+    color: var(--gold);
+    font-size: 1.2rem;
+}
+
+/* Блок Школи */
+.school-hero {
+    height: 70vh; 
+    background: url('img/school-bg.jpg') no-repeat;
+    background-size: cover;
+    background-position: center 30%; /* Налаштування висоти фону */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+}
+
+.school-overlay { background: rgba(0,0,0,0.8); padding: 60px; width: 100%; }
+.school-info { padding: 80px 5%; }
+
+.course-price {
+    margin-top: 30px;
+    font-size: 2rem;
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+}
+
+.check-list { list-style: none; margin: 20px 0; line-height: 2; }
+
+.btn-consult {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 15px 35px;
+    background: transparent;
+    color: var(--gold);
+    border: 2px solid var(--gold);
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+.btn-consult:hover { background: var(--gold); color: black; transform: scale(1.05); }
+
+
+/* ==========================================================================
+   9. ФІНАЛЬНА СИСТЕМА ОНЛАЙН-ЗАПИСУ (booking.html) - ВЕРСІЯ V4
+   ========================================================================== */
+.booking-form-container {
+    background: #0a0a0a;
+    border: 1px solid #1c1c1c;
+    padding: 30px;
+    max-width: 650px;
+    margin: 40px auto;
+    border-radius: 8px;
+    position: relative;
+    min-height: 500px;
+}
+
+/* Верхні кроки */
+.step-indicator {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #1c1c1c;
+    padding-bottom: 15px;
+}
+.ind-step { font-size: 14px; color: #444; font-weight: bold; }
+.ind-step.active { color: #c5a059; }
+
+/* Перемикання кроків */
+.booking-step { display: none; opacity: 0; transform: translateY(10px); transition: all 0.4s ease-in-out; }
+.booking-step.active { display: block; opacity: 1; transform: translateY(0); }
+
+/* Акордеон категорій */
+.accordion-header {
+    background: #111;
+    padding: 20px;
+    border: 1px solid #222;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    color: #fff;
+    user-select: none;
+}
+.accordion-header .arrow { transition: transform 0.3s ease; color: #c5a059; }
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+    background: #0d0d0d;
+}
+.accordion-content.open { max-height: 1500px; transition: max-height 0.5s ease-in; }
+
+/* Преміум картки послуг у формі */
+.services-scroll-grid { padding: 15px 0; display: flex; flex-direction: column; gap: 15px; }
+.service-card-premium { display: flex; background: #141414; border: 1px solid #222; cursor: pointer; transition: 0.3s; }
+.service-card-premium:hover { border-color: #c5a059; background: #191919; }
+.s-img-wrapper img { width: 100px; height: 100px; object-fit: cover; }
+.s-info-block { padding: 15px; display: flex; flex-direction: column; justify-content: center; flex-grow: 1; }
+.s-info-block h4 { margin: 0 0 5px 0; color: #fff; }
+.s-info-block p { margin: 0; font-size: 13px; color: #777; }
+.price-tag { color: #c5a059; font-weight: bold; margin-top: 5px; }
+
+/* Вибір майстрів */
+.masters-premium-grid { display: flex; flex-direction: column; gap: 15px; margin: 20px 0; }
+.master-card-premium { display: flex; align-items: center; gap: 20px; background: #111; padding: 15px; border: 1px solid #222; cursor: pointer; transition: 0.3s; }
+.master-card-premium:hover { border-color: #c5a059; background: #161616; }
+.master-card-premium img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid #222; }
+.m-details h4 { margin: 0; color: #fff; }
+.m-details p { margin: 5px 0 0 0; color: #c5a059; font-size: 13px; }
+
+/* Кастомний темний календар */
+.calendar-wrapper-premium .flatpickr-calendar, .flatpickr-calendar {
+    background: #0a0a0a !important;
+    border: 1px solid #222 !important;
+    box-shadow: none !important;
+    width: 100% !important;
+    margin: 0 auto 20px !important;
+}
+.calendar-wrapper-premium .flatpickr-day { color: #fff !important; }
+.calendar-wrapper-premium .flatpickr-day.selected, .flatpickr-day.selected { background: #c5a059 !important; border-color: #c5a059 !important; color: #000 !important; font-weight: bold; }
+.calendar-wrapper-premium .flatpickr-day.disabled { color: #333 !important; }
+
+/* Блок нашого власного календаря */
+.custom-calendar-v4 { background: #111; border: 1px solid #222; padding: 15px; border-radius: 6px; margin: 20px 0; max-width: 350px; }
+.cal-header-v4 { text-align: center; font-weight: bold; color: #c5a059; margin-bottom: 15px; }
+.cal-weekdays-v4 { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; color: #555; font-size: 13px; margin-bottom: 10px; }
+.cal-days-v4 { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+.cal-day-v4 { padding: 10px 0; text-align: center; font-size: 14px; cursor: pointer; color: #aaa; transition: 0.2s; }
+.cal-day-v4:hover:not(.empty):not(.busy) { background: #222; color: #fff; }
+.cal-day-v4.selected { background: #c5a059 !important; color: #000 !important; font-weight: bold; border-radius: 4px; }
+.cal-day-v4.busy { color: #333; cursor: not-allowed; text-decoration: line-through; }
+.cal-day-v4.empty { cursor: default; }
+
+/* Часові сітки (Слоти) */
+.slots-grid-premium, .slots-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0; }
+.slot-v4, .slot { padding: 12px; background: #111; border: 1px solid #222; color: #fff; cursor: pointer; transition: 0.3s; text-align: center; }
+.slot-v4:hover:not(.busy), .slot:hover:not(.busy) { border-color: #c5a059; color: #c5a059; }
+.slot-v4.selected, .slot.selected { background: #c5a059; color: #000; border-color: #c5a059; font-weight: bold; }
+.slot-v4.busy, .slot.busy { background: #050505; color: #333; border-color: #111; cursor: not-allowed; text-decoration: line-through; opacity: 0.6; }
+
+/* Форма вводу даних клієнта */
+.final-inputs-premium { display: flex; gap: 15px; margin-top: 25px; }
+.dark-input-v4, .dark-input { width: 100%; padding: 15px; background: #111; border: 1px solid #222; color: #fff; margin-bottom: 10px; }
+.btn-submit-premium, .btn-confirm { width: 100%; padding: 18px; background: #c5a059; color: #000; border: none; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 20px; transition: 0.3s; }
+.btn-submit-premium:hover { background: #b08c4b; }
+.btn-back { background: none; border: none; color: #666; cursor: pointer; margin-top: 20px; text-decoration: underline; }
+.btn-back:hover { color: #c5a059; }
+
+.hidden { display: none; }
+
+
+/* ==========================================================================
+   10. СТАРІ / ПРОМІЖНІ ВЕРСІЇ ФОРМИ БРОНЮВАННЯ (Збережено, щоб нічого не впало)
+   ========================================================================== */
+.booking-section { padding: 50px 5%; display: flex; justify-content: center; }
+.booking-container { background: #151515; padding: 40px; border-radius: 5px; border: 1px solid var(--gold); max-width: 600px; width: 100%; }
+.booking-container h2 { font-family: 'Playfair Display', serif; color: var(--gold); text-align: center; margin-bottom: 30px; }
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; margin-bottom: 8px; color: var(--gold); font-weight: bold; }
+.form-group input, .form-group select { width: 100%; padding: 12px; background: #222; border: 1px solid #333; color: white; border-radius: 3px; }
+.form-row { display: flex; gap: 20px; }
+.form-row .form-group { flex: 1; }
+.barber-selection { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.barber-card input { display: none; }
+.barber-info { background: #222; padding: 15px 10px; text-align: center; border: 1px solid #333; cursor: pointer; transition: 0.3s; }
+.barber-card input:checked + .barber-info { border-color: var(--gold); background: #2a2a2a; }
+.barber-info .name { display: block; font-weight: bold; font-size: 0.9rem; }
+.barber-info .rank { font-size: 0.7rem; color: var(--gold); text-transform: uppercase; }
+.btn-submit { width: 100%; padding: 15px; background: var(--gold); border: none; color: black; font-weight: bold; cursor: pointer; margin-top: 20px; transition: 0.3s; }
+.btn-submit:hover { background: white; }
+
+/* Версія форми V2 */
+.booking-v2 { display: flex; justify-content: center; padding: 60px 20px; }
+.booking-wrapper { background: #111; border: 1px solid #222; padding: 40px; max-width: 500px; width: 100%; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+.step-box { margin-bottom: 30px; }
+.step-box label { display: block; color: var(--gold); margin-bottom: 15px; font-weight: bold; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+
+/* Стара версія кроків */
+.booking-step-old { display: none; opacity: 0; transform: translateX(20px); transition: 0.5s ease; }
+.booking-step-old.active { display: block; opacity: 1; transform: translateX(0); }
+.s-item, .m-item { background: #1a1a1a; padding: 20px; margin-bottom: 15px; border: 1px solid #333; cursor: pointer; display: flex; justify-content: space-between; transition: 0.3s; }
+.s-item:hover, .m-item:hover { border-color: #c5a059; background: #222; }
+.m-item { align-items: center; justify-content: flex-start; gap: 15px; }
+.m-item img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
+
+/* Старий список вибору послуг */
+.services-list-v2 { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+.service-check { display: none; }
+.service-label { display: flex; justify-content: space-between; padding: 15px; background: #1a1a1a; border: 1px solid #333; border-radius: 5px; cursor: pointer; transition: 0.3s; }
+.service-check:checked + .service-label { border-color: #c5a059; background: rgba(197, 160, 89, 0.1); }
+.service-label .name { color: #fff; font-weight: bold; }
+.service-label .price { color: #c5a059; }
+
+
+/* ==========================================================================
+   11. ПІДВАЛ САЙТУ (Footer - Однаковий для всіх сторінок)
+   ========================================================================== */
+.main-footer {
+    background: #000;
+    color: #fff;
+    padding: 60px 10% 20px;
+    border-top: 2px solid #1a1a1a;
+}
+
+.footer-container { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; }
+.footer-section h3 { font-size: 1.2rem; margin-bottom: 25px; letter-spacing: 1px; }
+.footer-section p { margin-bottom: 10px; color: #ccc; }
+.footer-links { list-style: none; padding: 0; }
+.footer-links li { margin-bottom: 12px; }
+.footer-links a { color: #ccc; text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
+.footer-links a:hover { color: var(--gold); }
+
+/* Іконки соцмереж у стилі App Store / Doberman */
+.social-icons { margin-top: 20px; display: flex; gap: 15px; }
+.icon-ios { display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; border-radius: 10px; position: relative; transition: 0.3s; box-shadow: 0 4px 8px rgba(0,0,0,0.4); overflow: hidden; }
+.icon-ios.inst { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+.icon-ios.tg { background: linear-gradient(180deg, #2AABEE 0%, #229ED9 100%); }
+
+.footer-icon {
+    width: 25px; height: 25px; object-fit: contain;
+    filter: brightness(0) invert(1); /* Робить картинку повністю білою */
+    pointer-events: none;
+}
+.icon-ios:hover { transform: scale(1.1); }
+
+.footer-bottom { margin-top: 50px; border-top: 1px solid #222; padding-top: 20px; display: flex; justify-content: space-between; font-size: 0.8rem; color: #555; }
+
+
+/* ==========================================================================
+   12. КУСТАРНІ АНІМАЦІЇ СКРОЛУ ТА ДИНАМІКА
+   ========================================================================== */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in { animation: fadeInUp 1s ease-out forwards; }
+.fade-in-delayed { animation: fadeInUp 1.5s ease-out forwards; opacity: 0; }
+
+/* Наша кастомна заміна AOS */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.scroll-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* ==========================================================================
+   13. АДАПТИВНІСТЬ ДЛЯ МОБІЛЬНИХ ПРИСТРОЇВ (Media Queries)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .details-container-premium {
+        flex-direction: column;
+        text-align: center;
+    }
+    .values-grid-premium {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+ /* Очищаємо блоки посилань від старих білих фонів */
+.social-icons a.icon-ios {
+    background: transparent !important; /* Вбиваємо білий квадрат на фоні */
+    padding: 0 !important;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 0 !important;
+}
+
+/* Твій клас для картинок, але з жорстким скиданням */
+.my-social-img {
+    width: 32px !important;       /* Зробив трохи більшими, щоб чітко було видно */
+    height: 32px !important;
+    object-fit: contain !important;
+    display: block;
+}
+
+
+
+
+
+
+/* Робимо картинки акуратними та вирівнюємо по центру */
+.f-icon .feature-img {
+    width: 45px;         /* Можеш змінити на 40px або 50px, як краще виглядатиме */
+    height: 45px;
+    object-fit: contain; /* Щоб картинка не стискалася і не деформувалася */
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Якщо блок .f-icon мав якийсь фіксований розмір або фон, 
+   переконайся, що картинка стоїть рівно по центру */
+.f-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px; /* Відступ від картинки до заголовка h3 */
+}
+
+
+
+/* Прибираємо підкреслення тексту для ВСІХ кнопок запису */
+a[href="booking.php"] {
+    text-decoration: none !important;    /* Забороняємо підкреслення тексту */
+    display: inline-block !important;    /* Дозволяємо кнопці мати правильні відступи */
+}
+
+/* Якщо підкреслення все одно лишилося при наведенні мишкою */
+a[href="booking.php"]:hover {
+    text-decoration: none !important;
+}
+
+/* Повертаємо кнопці правильну форму та відступи */
